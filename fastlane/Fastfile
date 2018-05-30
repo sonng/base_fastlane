@@ -1,0 +1,66 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+require 'json'
+
+default_platform(:ios)
+
+platform :ios do
+  
+  desc "Build the application"
+  lane :build do |options|
+    set_version(options)
+    certificates_and_profiles(options)
+    build_ipa(options)
+    distribute_ipa(options)
+  end
+
+
+  # Helper Methods
+  desc "Set the right version number"
+  lane :set_version do |options|
+    increment_version_number(version_number: options[:version][/^[0-9]*\.[0-9]*\.[0-9]*/])
+    increment_build_number(build_number: options[:version])
+  end
+
+  desc "Download certificates using match"
+  lane :certificates_and_profiles do |options|
+    match(
+      git_url: "git@github.com:sonng/poc_certificates.git", 
+      app_identifier: "com.poc.FastlaneAnyProject",
+      type: "adhoc", 
+      readonly: true, 
+      verbose: true
+    )
+  end
+
+  desc "Build the App"
+  lane :build_ipa do |options|
+    build_ios_app(
+      workspace: "FastlaneAnyProject.xcworkspace",
+      configuration: "Release",
+      scheme: "FastlaneAnyProject",
+      silent: false,
+      clean: true,
+      output_directory: "build/",
+      output_name: "test.ipa",
+      sdk: "iOS 11.3"
+    )
+  end
+
+  desc "Distribution"
+  lane :distribute_ipa do |options|
+
+  end
+end
