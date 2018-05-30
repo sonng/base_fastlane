@@ -349,6 +349,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.0.0;
+				DEVELOPMENT_TEAM = 2S34DXWM2G;
 				INFOPLIST_FILE = FastlaneAnyProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -356,6 +357,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.poc.FastlaneAnyProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0223b740-532f-42a6-847c-1b52f375d2e8";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.poc.FastlaneAnyProject";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -370,6 +373,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1.0.0;
+				DEVELOPMENT_TEAM = 2S34DXWM2G;
 				INFOPLIST_FILE = FastlaneAnyProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -377,6 +381,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.poc.FastlaneAnyProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0223b740-532f-42a6-847c-1b52f375d2e8";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.poc.FastlaneAnyProject";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
