@@ -20,6 +20,11 @@ platform :ios do
 
   desc "Build the application"
   lane :build do |options|
+    
+  end
+
+  desc "Build the application"
+  lane :build_internal do |options|
     set_version(options)
     certificates_and_profiles(options)
     build_ipa(options)
@@ -61,6 +66,9 @@ platform :ios do
 
   desc "Distribution"
   lane :distribute_ipa do |options|
-
+    hockey(
+      api_token: "a579900b503c4add9a7750955fb8ee15",
+      ipa: "./build/test.ipa"
+    )
   end
 end
