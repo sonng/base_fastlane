@@ -44,7 +44,6 @@ platform :ios do
     config_hash = JSON.parse(file, symbolize_names: true)
     options = config_hash.merge(options)
 
-    puts options
     if options.key?(:config) == false
       UI.user_error!("Please provide a config e.g -- bundle exec fastlane build config:qa version:1.4.2.3")
     else
@@ -55,7 +54,7 @@ platform :ios do
     if (options[:configs]).key?(options[:config]) == false
       UI.user_error!("#{options[:configs][:config]} Config doesn't exist, please check config.json")
     else
-      # Flatten the config 
+      # Flatten the config based on the symbol that we got above
       config_key = options[:config]
       options[:config] = options[:configs][config_key]
     end
