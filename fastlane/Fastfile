@@ -12,15 +12,22 @@
 
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
-require 'json'
+# fastlane_require 'json'
 
 default_platform(:ios)
 
 platform :ios do
-
+  
   desc "Build the application"
   lane :build do |options|
-    
+    options = check_and_load_config options
+    build_internal options
+  end
+
+  lane :build_and_upload do |options|
+    options = check_and_load_config options
+    build_internal options
+    distribute_ipa options
   end
 
   desc "Build the application"
@@ -28,11 +35,38 @@ platform :ios do
     set_version(options)
     certificates_and_profiles(options)
     build_ipa(options)
-    distribute_ipa(options)
   end
 
-
   # Helper Methods
+  desc "Check parameters passed in"
+  lane :check_and_load_config do |options|
+    file = File.read('config.json')
+    config_hash = JSON.parse(file, symbolize_names: true)
+    options = config_hash.merge(options)
+
+    puts options
+    if options.key?(:config) == false
+      UI.user_error!("Please provide a config e.g -- bundle exec fastlane build config:qa version:1.4.2.3")
+    else
+      # Fix up config and change it from a string to a symbol
+      options[:config] = options[:config].to_sym
+    end
+
+    if (options[:configs]).key?(options[:config]) == false
+      UI.user_error!("#{options[:configs][:config]} Config doesn't exist, please check config.json")
+    else
+      # Flatten the config 
+      config_key = options[:config]
+      options[:config] = options[:configs][config_key]
+    end
+
+    # Add in binary name
+    options[:build_path] = "build/"
+    options[:output_name] = "#{options[:config][:scheme]}_#{options[:version]}.ipa"
+
+    options
+  end
+
   desc "Set the right version number"
   lane :set_version do |options|
     increment_version_number(version_number: options[:version][/^[0-9]*\.[0-9]*\.[0-9]*/])
@@ -41,10 +75,11 @@ platform :ios do
 
   desc "Download certificates using match"
   lane :certificates_and_profiles do |options|
+    puts options
     match(
-      git_url: "git@github.com:sonng/poc_certificates.git", 
-      app_identifier: "com.poc.FastlaneAnyProject",
-      type: "adhoc", 
+      git_url: options[:git_url], 
+      app_identifier: options[:app_identifier],
+      type: options[:config][:build_type], 
       readonly: true, 
       verbose: true
     )
@@ -53,22 +88,21 @@ platform :ios do
   desc "Build the App"
   lane :build_ipa do |options|
     build_app(
-      workspace: "FastlaneAnyProject.xcworkspace",
-      configuration: "Release",
-      scheme: "FastlaneAnyProject",
+      workspace: options[:workspace],
+      configuration: options[:config][:config],
+      scheme: options[:config][:scheme],
       silent: false,
       clean: true,
-      output_directory: "build/",
-      output_name: "test.ipa",
-      sdk: "iOS 11.3"
+      output_directory: options[:build_path],
+      output_name: options[:output_name]
     )
   end
 
   desc "Distribution"
   lane :distribute_ipa do |options|
     hockey(
-      api_token: "a579900b503c4add9a7750955fb8ee15",
-      ipa: "./build/test.ipa"
+      api_token: options[:hockapp_id],
+      ipa: "./#{options[:build_path]}#{options[:output_name]}"
     )
   end
 end

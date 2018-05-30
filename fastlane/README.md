@@ -35,6 +35,21 @@ xcode-select --install
 fastlane ios build
 ```
 Build the application
+### ios build_and_upload
+```
+fastlane ios build_and_upload
+```
+
+### ios build_internal
+```
+fastlane ios build_internal
+```
+Build the application
+### ios check_and_load_config
+```
+fastlane ios check_and_load_config
+```
+Check parameters passed in
 ### ios set_version
 ```
 fastlane ios set_version

@@ -1,0 +1,13 @@
+{
+    "git_url": "git@github.com:sonng/poc_certificates.git",
+    "app_identifier": "com.poc.FastlaneAnyProject",
+    "workspace": "FastlaneAnyProject.xcworkspace",
+    "hockapp_id": "a579900b503c4add9a7750955fb8ee15",
+    "configs": {
+        "qa": {
+            "build_type": "adhoc",
+            "config": "Release",
+            "scheme": "FastlaneAnyProject"
+        }
+    }
+}
