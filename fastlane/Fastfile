@@ -39,8 +39,7 @@ platform :ios do
   end
 
   # Helper Methods
-  desc "Check parameters passed in"
-  lane :check_and_load_config do |options|
+  def check_and_load_config(options)
     file = File.read('config.json')
     config_hash = JSON.parse(file, symbolize_names: true)
     options = config_hash.merge(options)
@@ -70,14 +69,12 @@ platform :ios do
     options
   end
 
-  desc "Set the right version number"
-  lane :set_version do |options|
+  def set_version(options)
     increment_version_number(version_number: options[:version][/^[0-9]*\.[0-9]*\.[0-9]*/])
     increment_build_number(build_number: options[:version])
   end
 
-  desc "Download certificates using match"
-  lane :certificates_and_profiles do |options|
+  def certificates_and_profiles(options)
     ensure_temp_keychain options[:keychain_name]
     match(
       git_url: options[:git_url],
@@ -90,8 +87,7 @@ platform :ios do
     )
   end
 
-  desc "Build the App"
-  lane :build_ipa do |options|
+  def build_ipa(options)
     build_app(
       workspace: options[:workspace],
       configuration: options[:config][:config],
@@ -103,8 +99,7 @@ platform :ios do
     )
   end
 
-  desc "Distribution"
-  lane :distribute_ipa do |options|
+  def distribute_ipa(options)
     hockey(
       api_token: options[:config][:hockeyapp_id] || options[:hockeyapp_id],
       ipa: "./#{options[:build_path]}#{options[:output_name]}"
