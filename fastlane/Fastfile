@@ -35,6 +35,7 @@ platform :ios do
     set_version(options)
     certificates_and_profiles(options)
     build_ipa(options)
+    delete_temp_keychain options[:keychain_name]
   end
 
   # Helper Methods
@@ -63,6 +64,9 @@ platform :ios do
     options[:build_path] = "build/"
     options[:output_name] = "#{options[:config][:scheme]}_#{options[:version]}.ipa"
 
+    # Add temp keychain name
+    options[:keychain_name] = "fastlane_#{options[:config][:scheme]}"
+
     options
   end
 
@@ -74,14 +78,15 @@ platform :ios do
 
   desc "Download certificates using match"
   lane :certificates_and_profiles do |options|
-    puts options
+    ensure_temp_keychain options[:keychain_name]
     match(
       git_url: options[:git_url],
       git_branch: options[:git_repo],
       app_identifier: options[:config][:app_identifier] || options[:app_identifier],
       type: options[:config][:build_type], 
       readonly: true, 
-      verbose: true
+      verbose: true,
+      keychain_name: options[:keychain_name]
     )
   end
 
@@ -104,5 +109,14 @@ platform :ios do
       api_token: options[:config][:hockeyapp_id] || options[:hockeyapp_id],
       ipa: "./#{options[:build_path]}#{options[:output_name]}"
     )
+  end
+
+  def ensure_temp_keychain(name)
+    delete_keychain(name: name) if File.exists? File.expand_path("~/Library/Keychains/#{name}-db")
+    create_keychain(name: name, password: 'temppassword', unlock: true, timeout: false)
+  end
+
+  def delete_temp_keychain(name)
+    delete_keychain(name: name) if File.exists? File.expand_path("~/Library/Keychains/#{name}-db")
   end
 end

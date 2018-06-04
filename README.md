@@ -34,6 +34,7 @@ We use Fastlane Match to manage our certificates and profiles. We will need to a
 
 1. Make sure `git_url` points to our certificates and profiles private git repository
 2. Update `app_identifier` to contain all of the bundle ids used by the project
+3. Update `git_branch` to the team name
 
 Once the above has changed, run the below and follow the prompts. This will generate all of the profiles and certificates (if one isn't present) and commit it to the `git_url`
 
