@@ -2,12 +2,26 @@
     "git_url": "git@github.com:sonng/poc_certificates.git",
     "app_identifier": "com.poc.FastlaneAnyProject",
     "workspace": "FastlaneAnyProject.xcworkspace",
-    "hockapp_id": "a579900b503c4add9a7750955fb8ee15",
+    "hockeyapp_id": "a579900b503c4add9a7750955fb8ee15",
     "configs": {
-        "qa": {
+        "staging": {
             "build_type": "adhoc",
             "config": "Release",
-            "scheme": "FastlaneAnyProject"
+            "scheme": "FastlaneAnyProject",
+            "app_identifier": "com.poc.FastlaneAnyProject",
+            "hockeyapp_id": "a579900b503c4add9a7750955fb8ee15"
+        },
+        "production": {
+            "build_type": "adhoc",
+            "config": "Release",
+            "scheme": "FastlaneAnyProject-Production",
+            "app_identifier": "com.poc.FastlaneAnyProject.prod"
+        },
+        "appStore": {
+            "build_type": "appStore",
+            "config": "Release",
+            "scheme": "FastlaneAnyProject",
+            "app_identifier": "com.poc.FastlaneAnyProject"
         }
     }
 }

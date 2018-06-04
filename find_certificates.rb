@@ -1,6 +1,6 @@
 require 'spaceship'
 
-Spaceship.login('m.kakason@gmail.com')
+Spaceship.login('sonnguyen@hipagesgroup.com.au')
 Spaceship.select_team
 
 Spaceship.certificate.all.each do | cert |

@@ -77,7 +77,7 @@ platform :ios do
     puts options
     match(
       git_url: options[:git_url], 
-      app_identifier: options[:app_identifier],
+      app_identifier: options[:config][:app_identifier] || options[:app_identifier],
       type: options[:config][:build_type], 
       readonly: true, 
       verbose: true
@@ -100,7 +100,7 @@ platform :ios do
   desc "Distribution"
   lane :distribute_ipa do |options|
     hockey(
-      api_token: options[:hockapp_id],
+      api_token: options[:config][:hockeyapp_id] || options[:hockeyapp_id],
       ipa: "./#{options[:build_path]}#{options[:output_name]}"
     )
   end
