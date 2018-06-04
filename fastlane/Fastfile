@@ -76,7 +76,8 @@ platform :ios do
   lane :certificates_and_profiles do |options|
     puts options
     match(
-      git_url: options[:git_url], 
+      git_url: options[:git_url],
+      git_branch: options[:git_repo],
       app_identifier: options[:config][:app_identifier] || options[:app_identifier],
       type: options[:config][:build_type], 
       readonly: true, 
