@@ -25,6 +25,8 @@ Below is what each symbol means and what kind of value is is expecting.
 | workspace | The name of the workspace file which contains everything we need to build | Yes |
 | hockeyapp_id | The default API token for the particular HockeyApp build | Yes |
 | configs | A dictionary of `config`. Please see below `Config Model` | Yes |
+| slack_url | The Slack URL Webhook | Yes |
+| slack_channel | The channel on slack that gets notified when a build is done | Yes |
 
 ### Config Model
 | Field | Description | Required |
