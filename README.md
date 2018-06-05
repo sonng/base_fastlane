@@ -4,6 +4,13 @@ The intention of this documentation is to walkthrough the process of adding the 
 
 The idea is to have a simple base Fastlane script that does everything we need and a configuration file that contains the values needed per project.
 
+# Pre-Config
+
+## Generate HockeyApp API Tokens
+On HockeyApp, in `Account Settings`, generate an `Upload & Release` token for each config, this usually points to a single app on HockeyApp. This limits the attack scope if the API token was leaked, but also allows less configuration as fastlane know exactly where to upload the build.
+
+# Project Configuration
+
 ## Copy `fastlane` folder into project
 Copy the whole `fastlane` folder into the root project folder.
 
