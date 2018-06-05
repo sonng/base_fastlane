@@ -1,6 +1,8 @@
 {
     "git_url": "git@github.com:sonng/poc_certificates.git",
     "git_repo": "team_branch",
+    "slack_url": "",
+    "slack_channel": "slack-spam-tests",
     "app_identifier": "com.poc.FastlaneAnyProject",
     "workspace": "FastlaneAnyProject.xcworkspace",
     "hockeyapp_id": "a579900b503c4add9a7750955fb8ee15",
