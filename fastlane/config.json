@@ -6,6 +6,7 @@
     "app_identifier": "com.poc.FastlaneAnyProject",
     "workspace": "FastlaneAnyProject.xcworkspace",
     "hockeyapp_id": "a579900b503c4add9a7750955fb8ee15",
+    "plist_path": "FastlaneAnyProject/Info.plist",
     "configs": {
         "staging": {
             "build_type": "adhoc",
