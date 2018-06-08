@@ -18,7 +18,6 @@ require_relative 'config'
 default_platform(:ios)
 
 platform :ios do
-  
   desc "Build the application"
   lane :build do |options|
     options = check_and_load_config options
@@ -34,6 +33,7 @@ platform :ios do
 
   desc "Build the application"
   lane :build_internal do |options|
+    ensure_temp_keychain(options[:keychain_name], options[:keychain_password])
     set_version(options)
     set_bundle_identifier(options)
     certificates_and_profiles(options)
@@ -55,7 +55,6 @@ platform :ios do
   end
 
   def certificates_and_profiles(options)
-    ensure_temp_keychain options[:keychain_name]
     match(
       git_url: options[:git_url],
       git_branch: options[:git_repo],
@@ -63,7 +62,8 @@ platform :ios do
       type: options[:config][:build_type], 
       readonly: true, 
       verbose: true,
-      keychain_name: options[:keychain_name]
+      keychain_name: options[:keychain_name],
+      keychain_password: options[:keychain_password]
     )
   end
 
@@ -98,9 +98,9 @@ platform :ios do
     )
   end
 
-  def ensure_temp_keychain(name)
+  def ensure_temp_keychain(name, password)
     delete_keychain(name: name) if File.exists? File.expand_path("~/Library/Keychains/#{name}-db")
-    create_keychain(name: name, password: 'temppassword', unlock: true, timeout: false)
+    create_keychain(name: name, password: password, unlock: true, timeout: false, default_keychain: false)
   end
 
   def delete_temp_keychain(name)

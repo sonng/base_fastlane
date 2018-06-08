@@ -23,7 +23,7 @@ def check_and_load_config(options)
     options[:output_name] = "#{options[:config][:scheme]}_#{options[:version]}.ipa"
 
     # Add temp keychain name
-    options[:keychain_name] = "fastlane_#{options[:config][:scheme]}"
+    options[:keychain_name] = "fastlane_#{options[:config][:scheme]}" if options[:keychain_name] == nil
 
     # Fix up version number for iOS
     options[:build_number] = options[:version]
@@ -31,6 +31,9 @@ def check_and_load_config(options)
 
     # Set messages for slack
     options[:slack_message] = "#{options[:config][:scheme]} is available on HockeyApp."
+
+    options[:keychain_name] = "fastlane_tmp_keychain"
+    options[:keychain_password] = ''
 
     options
 end
